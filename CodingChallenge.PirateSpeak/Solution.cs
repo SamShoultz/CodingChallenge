@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace CodingChallenge.PirateSpeak
 {
@@ -7,7 +9,35 @@ namespace CodingChallenge.PirateSpeak
     {
         public string[] GetPossibleWords(string jumble, string[] dictionary)
         {
-            throw new NotImplementedException();
+            List<string> found_results = new List<string>();
+
+            foreach(string word in dictionary)
+            {
+                // create temp word for comparison 
+                string temp_word = word;
+                // only look at words with the same length
+                if (jumble.Length == word.Length)
+                {
+                    // split the jumbled wored into an array to parse
+                    char[] word_chars = jumble.ToCharArray();
+                    int found = 0;
+                    // check each letter of the word
+                    foreach(char cur_letter in word_chars)
+                    {
+                        if (temp_word.Contains(cur_letter))
+                        {
+                            found++;
+                            var regex = new Regex(Regex.Escape(cur_letter.ToString()));
+                            temp_word = regex.Replace(temp_word, "*", 1); 
+                        }
+                    }
+                    // if all letters match add the word the the list to be returned
+                    if (found == jumble.Length)
+                        found_results.Add(word);
+                }
+            }
+            // return list as an array
+            return found_results.ToArray();
         }
     }
 }
