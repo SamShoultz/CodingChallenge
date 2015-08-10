@@ -27,8 +27,8 @@ namespace CodingChallenge.PirateSpeak
                         if (temp_word.Contains(cur_letter))
                         {
                             found++;
-                            var regex = new Regex(Regex.Escape(cur_letter.ToString()));
-                            temp_word = regex.Replace(temp_word, "*", 1); 
+                            // remove "validated" letter, handles duplications ex. oob
+                            temp_word = temp_word.Remove(temp_word.IndexOf(cur_letter), 1); 
                         }
                     }
                     // if all letters match add the word the the list to be returned

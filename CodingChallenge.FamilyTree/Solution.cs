@@ -18,6 +18,10 @@ namespace CodingChallenge.FamilyTree
                 foreach (Person _curDesendent in person.Descendants)
                 {
                     month = person.Descendants.Find(x => x.Name.Equals(descendantName)) != null ? person.Descendants.Find(x => x.Name.Equals(descendantName)).Birthday.ToString("MMMM") : GetBirthMonth(_curDesendent, descendantName);
+
+                    // validate if the month is already set, then exit (descendant found)
+                    if (month.Length > 0)
+                        break;
                 }
             }
             // method will return empty string when no records are found, usually you would want to "throw" an error / exception to properly notify
